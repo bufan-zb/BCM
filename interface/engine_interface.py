@@ -3,14 +3,15 @@ from interface.interface_utlis import BackendThread, Window
 
 
 class Engine(Window):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, x, y, w, h, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.names = ENGINE_INTERFACE
-        self.page_setup('发动机界面')
+        self.page_setup('发动机界面', x, y, w, h)
 
         ###### 三个按钮事件 ######
         self.pushButton1.clicked.connect(self.on_pushButton1_clicked)
         self.pushButton2.clicked.connect(self.on_pushButton2_clicked)
+        self.pushButton3.setEnabled(False)
 
         self.refresh_data()
 

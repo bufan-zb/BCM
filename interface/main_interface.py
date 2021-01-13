@@ -3,13 +3,15 @@ from interface.interface_utlis import BackendThread, Window
 
 
 class FirstMain(Window):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, x, y, w, h, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.names = MAIN_INTERFACE
-        self.page_setup('主界面')
+        self.page_setup('主界面', x, y, w, h)
+
 
 
         ###### 三个按钮事件 ######
+        self.pushButton1.setEnabled(False)
         self.pushButton2.clicked.connect(self.on_pushButton2_clicked)
         self.pushButton3.clicked.connect(self.on_pushButton3_clicked)
 
