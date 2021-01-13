@@ -1,7 +1,4 @@
-import time
-
 import logging
-from PyQt5.QtCore import QThread, pyqtSignal, QDateTime
 
 
 def get_logger(path="root.log"):
@@ -13,14 +10,3 @@ def get_logger(path="root.log"):
     )
     logger = logging.getLogger(__name__)
     return logger
-
-
-class BackendThread(QThread):
-    update_date = pyqtSignal(str)
-
-    def run(self):
-        while True:
-            date = QDateTime.currentDateTime()
-            currentTime = date.toString("yyyy-MM-dd hh:mm:ss")
-            self.update_date.emit(str(currentTime))
-            time.sleep(1)

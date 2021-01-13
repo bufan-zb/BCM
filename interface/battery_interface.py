@@ -1,10 +1,10 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton
 
 from conf.conf import BATERY_INTERFACE, logger
-from utlis import BackendThread
+from interface.interface_utlis import BackendThread, Window
 
 
-class Battery(QMainWindow):
+class Battery(Window):
     windowList = []
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,6 +31,7 @@ class Battery(QMainWindow):
         self.pushButton3 = QPushButton()
         self.pushButton3.setText("发动机")
         self.buttonLayout.addWidget(self.pushButton3)
+        self.names = BATERY_INTERFACE
         self.page_setup()
         # 设置状态栏
         self.statusBar().showMessage("当前用户：bufan")
@@ -45,20 +46,7 @@ class Battery(QMainWindow):
 
         self.initUI()
 
-    def page_setup(self):
-        names = BATERY_INTERFACE
-        self.but_list = []
-        for i, name_list in enumerate(names):
-            self.topwidget = QWidget()
-            self.Layout.addWidget(self.topwidget)
-            self.buttonLayout = QHBoxLayout(self.topwidget)
-            for j, name in enumerate(name_list):
-                button = QPushButton()
-                button.setText(name)
-                # button.resize(100, 50)
-                button.setToolTip(name)
-                self.buttonLayout.addWidget(button)
-                self.but_list.append(button)
+
 
     def initUI(self):
         self.backend = BackendThread()
@@ -67,5 +55,5 @@ class Battery(QMainWindow):
 
     def handleDisplay(self, data):
         logger.info(data)
-        for i in self.but_list:
-            i.setText(data)
+        for i, but in enumerate(self.but_list):
+            but.setText(data.get(self.but_name_list[i], "没有数据"))
