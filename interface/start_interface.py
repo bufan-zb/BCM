@@ -14,12 +14,14 @@ class BatteryWindow(Battery):
     def on_pushButton1_clicked(self):
         the_window = FirstMainWindow(self.x(), self.y(), self.width(), self.height())
         self.windowList.append(the_window)
+        self.backend.quit()
         self.close()
         the_window.show()
 
     def on_pushButton3_clicked(self):
         the_window = EngineWindow(self.x(), self.y(), self.width(), self.height())
         self.windowList.append(the_window)
+        self.backend.quit()
         self.close()
         the_window.show()
 
@@ -30,6 +32,7 @@ class EngineWindow(Engine):
 
         the_window = FirstMainWindow(self.x(), self.y(), self.width(), self.height())
         self.windowList.append(the_window)
+        self.backend.quit()
         self.close()
         the_window.show()
 
@@ -37,6 +40,7 @@ class EngineWindow(Engine):
     def on_pushButton2_clicked(self):
         the_window = BatteryWindow(self.x(), self.y(), self.width(), self.height())
         self.windowList.append(the_window)
+        self.backend.quit()
         self.close()
         the_window.show()
 
@@ -46,12 +50,14 @@ class FirstMainWindow(FirstMain):
     def on_pushButton2_clicked(self):
         the_window =BatteryWindow(self.x(), self.y(), self.width(), self.height())
         self.windowList.append(the_window)
+        self.backend.quit()
         self.close()
         the_window.show()
 
     def on_pushButton3_clicked(self):
         the_window = EngineWindow(self.x(), self.y(), self.width(), self.height())
         self.windowList.append(the_window)
+        self.backend.quit()
         self.close()
         the_window.show()
 
