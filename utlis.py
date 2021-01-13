@@ -4,9 +4,9 @@ import logging
 from PyQt5.QtCore import QThread, pyqtSignal, QDateTime
 
 
-def get_logger():
+def get_logger(path="root.log"):
     logging.basicConfig(
-        filename="root.log",
+        filename=path,
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
         datefmt='%m/%d %H:%M:%S'

@@ -1,9 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton
 
-from conf.conf import MAIN_INTERFACE
-from utlis import get_logger, BackendThread
+from conf.conf import MAIN_INTERFACE, logger
+from utlis import BackendThread
 
-logger = get_logger()
 
 class FirstMain(QMainWindow):
     windowList = []
@@ -72,28 +71,3 @@ class FirstMain(QMainWindow):
         logger.info(data)
         for i in self.but_list:
             i.setText(data)
-
-    # 按钮一：打开主界面
-    windowList = []
-    def on_pushButton1_clicked(self):
-        the_window = FirstMainWindow()
-        self.windowList.append(the_window)
-        self.close()
-        the_window.show()
-
-
-    # 按钮二：打开对话框
-    def on_pushButton2_clicked(self):
-        the_window =BatteryWindow()
-        self.windowList.append(the_window)
-        self.close()
-        the_window.show()
-
-
-
-    # 按钮三：打开提示框
-    def on_pushButton3_clicked(self):
-        the_window = EngineWindow()
-        self.windowList.append(the_window)
-        self.close()
-        the_window.show()
