@@ -18,7 +18,6 @@ class BatteryWindow(Battery):
         self.close()
         the_window.show()
 
-    # 按钮三：打开提示框
     def on_pushButton3_clicked(self):
         the_window = EngineWindow()
         self.windowList.append(the_window)
