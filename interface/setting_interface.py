@@ -1,54 +1,35 @@
-import time
+from PyQt5.QtWidgets import QSizePolicy, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit
 
-from PyQt5.QtCore import QThread, pyqtSignal, QDateTime
-from PyQt5.QtWidgets import QMainWindow, QWidget, QHBoxLayout, QPushButton, QVBoxLayout, QSizePolicy
-
-from conf.conf import MAIN_INTERFACE
+from conf.conf import ENGINE_INTERFACE, logger, SETTING_INTERFACE
+from interface.interface_utlis import BackendThread, Window
 
 
-
-class BackendThread(QThread):
-    para = pyqtSignal(dict)
-
-    def __init__(self, mydict, *args, **kwargs):
+class Setting(Window):
+    def __init__(self, x, y, w, h, mydict, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.mydict = mydict
+        self.names = SETTING_INTERFACE
+        self.page_setup('设置', x, y, w, h, mydict)
 
-    def run(self):
-        while True:
-            date = QDateTime.currentDateTime()
-            currentTime = date.toString("yyyy-MM-dd hh:mm")
-            para = self.mydict.copy()
-            data_para = {"时间": str(currentTime)}
-            for i in MAIN_INTERFACE:
-                for key, value in i:
-                    data_para[key] = str(para.get(key, "")) + value
-            self.para.emit(data_para)
-            time.sleep(1)
+        ###### 三个按钮事件 ######
+        self.pushButton1.clicked.connect(self.on_pushButton1_clicked)
+        self.pushButton2.clicked.connect(self.on_pushButton2_clicked)
+        self.pushButton4.setEnabled(False)
+        self.pushButton3.clicked.connect(self.on_pushButton3_clicked)
+        self.backend = None
+
+        # self.refresh_data()
 
 
-# class BatteryBackendThread(QThread):
-#     para = pyqtSignal(dict)
-#
-#     def run(self):
-#         while True:
-#             date = QDateTime.currentDateTime()
-#             currentTime = date.toString("yyyy-MM-dd hh:mm:ss")
-#             self.para.emit({"1":str(currentTime)})
-#             time.sleep(1)
-#
-# class EngineBackendThread(QThread):
-#     para = pyqtSignal(dict)
-#
-#     def run(self):
-#         while True:
-#             date = QDateTime.currentDateTime()
-#             currentTime = date.toString("yyyy-MM-dd hh:mm:ss")
-#             self.para.emit({"1":str(currentTime)})
-#             time.sleep(1)
+    def refresh_data(self):
+        self.backend = BackendThread(self.mydict)
+        self.backend.para.connect(self.handleDisplay)
+        self.backend.start()
 
-class Window(QMainWindow):
-    windowList = []
+
+    def handleDisplay(self, data):
+        logger.info(data)
+        for i, but in enumerate(self.but_list):
+            but.setText(str(data.get(self.but_name_list[i], "没有数据")))
 
     def page_setup(self, title, x, y, w, h, mydict):
         self.mydict = mydict
@@ -99,16 +80,29 @@ class Window(QMainWindow):
             for j, (name, value) in enumerate(name_list):
                 if name == "":
                     continue
-                button = QPushButton()
-                button.setText(name)
-                # button.resize(100, 50)
-                button.setToolTip(name)
-                button.setStyleSheet("color: black;")
-                button.setSizePolicy(self.button_Adaptive)
-                button.setEnabled(False)
-                self.buttonLayout.addWidget(button)
-                self.but_list.append(button)
+                label = QLabel()
+                label.setText(name)
+                label.setSizePolicy(self.button_Adaptive)
+                self.buttonLayout.addWidget(label)
+                text = QLineEdit()
+                text.setText(str(value))
+                text.setSizePolicy(self.button_Adaptive)
+                self.buttonLayout.addWidget(text)
+                self.but_list.append(text)
                 self.but_name_list.append(name)
+
+        self.topwidget = QWidget()
+        self.Layout.addWidget(self.topwidget)
+        self.buttonLayout = QHBoxLayout(self.topwidget)
+        self.submitButton = QPushButton()
+        self.submitButton.setText("提交")
+        # button.resize(100, 50)
+        # button.setToolTip(name)
+        self.submitButton.setStyleSheet("color: black;")
+        self.submitButton.setSizePolicy(self.button_Adaptive)
+        self.submitButton.clicked.connect(self.on_submitButton_clicked)
+        # button.setEnabled(False)
+        self.buttonLayout.addWidget(self.submitButton)
         # 设置状态栏
         self.statusBar().showMessage("当前用户：bufan")
 
@@ -117,9 +111,5 @@ class Window(QMainWindow):
         # 窗口最大化
         # self.showMaximized()
 
-    def closeEvent(self, event):
-        try:
-            self.backend.terminate()
-        except:
-            pass
-        self.close()
+    def on_submitButton_clicked(self):
+        logger.info("点击提交")
