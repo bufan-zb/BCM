@@ -25,5 +25,6 @@ class Battery(Window):
 
     def handleDisplay(self, data):
         logger.info(data)
+        self.statusBar().showMessage("当前用户：bufan;时间："+data.get("时间"))
         for i, but in enumerate(self.but_list):
             but.setText(str(data.get(self.but_name_list[i], "没有数据")))

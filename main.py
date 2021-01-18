@@ -15,7 +15,6 @@ for paras in para_list:
         if key != "":
             data_dict[key] = 1
 
-
 def func1(mydict):
     pass
     # for i in range(1000000):

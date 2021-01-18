@@ -7,23 +7,30 @@ from conf.conf import MAIN_INTERFACE
 
 
 
-class BackendThread(QThread):
+class SystemThread(QThread):
     para = pyqtSignal(dict)
 
     def __init__(self, mydict, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.mydict = mydict
 
+    def system_para_update(self):
+        self._para = self.mydict.copy()
+        self.data_para = {
+            "时间": str(QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm"))
+        }
+
+
+
+class BackendThread(SystemThread):
+
     def run(self):
         while True:
-            date = QDateTime.currentDateTime()
-            currentTime = date.toString("yyyy-MM-dd hh:mm")
-            para = self.mydict.copy()
-            data_para = {"时间": str(currentTime)}
+            self.system_para_update()
             for i in MAIN_INTERFACE:
                 for key, value in i:
-                    data_para[key] = str(para.get(key, "")) + value
-            self.para.emit(data_para)
+                    self.data_para[key] = str(self._para.get(key, "")) + value
+            self.para.emit(self.data_para)
             time.sleep(1)
 
 
