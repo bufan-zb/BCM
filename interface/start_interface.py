@@ -1,5 +1,3 @@
-import time
-
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 
@@ -100,7 +98,7 @@ class FirstMainWindow(FirstMain):
     def on_pushButton4_clicked(self):
         pushButton4(self)
 
-def start_interface(mydict):
+def start_interface(mydict, myqueue):
     # 启动界面
     app = QApplication(sys.argv)
     window = QWidget()

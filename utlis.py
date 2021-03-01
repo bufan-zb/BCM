@@ -1,5 +1,4 @@
 import datetime
-
 import os
 
 import json
@@ -70,8 +69,6 @@ def parameter_1(mydict, myqueue):
     # 每秒钟获取一次的参数
     while True:
         mydict["时间"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-        mydict["发动机转速"] = mydict["rotate_speed"]*60
-        mydict["速度"] = mydict["rotate_speed"]/10
         myqueue.put_nowait({"json": dict(mydict.copy()), "file_name": ["电动车速度", "发动机转速", "电流", "电压", "油门"]})
         time.sleep(1)
 
@@ -99,7 +96,7 @@ def rotate_speed(mydict):
         t = str(int(time.time()))
         if t1 != t:
             t1 = t
-            mydict["rotate_speed"] = len(speed_list)
+            mydict["发动机转速"] = len(speed_list)*60
             speed_list = []
         speed_list.append(1)
 
@@ -111,9 +108,10 @@ def car_speed(mydict):
         t = str(int(time.time()))
         if t1 != t:
             t1 = t
-            mydict["car_speed"] = len(speed_list)
+            mydict["速度"] = len(speed_list)*50
             speed_list = []
         speed_list.append(1)
+
 
 if __name__ == '__main__':
     # 测试日志写入
