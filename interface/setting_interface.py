@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QSizePolicy, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit
 
-from conf.conf import ENGINE_INTERFACE, logger, SETTING_INTERFACE
+from conf.conf import SETTING_INTERFACE
 from interface.interface_utlis import BackendThread, Window
+from utlis import Logger
 
+logger = Logger()
 
 class Setting(Window):
     def __init__(self, x, y, w, h, mydict, *args, **kwargs):
@@ -17,18 +19,18 @@ class Setting(Window):
         self.pushButton3.clicked.connect(self.on_pushButton3_clicked)
         self.backend = None
 
-        # self.refresh_data()
+        # self.refresh_data(mydict)
 
 
-    def refresh_data(self):
-        self.backend = BackendThread(self.mydict)
+    def refresh_data(self, mydict):
+        self.backend = BackendThread(mydict, self.names)
         self.backend.para.connect(self.handleDisplay)
         self.backend.start()
 
 
     def handleDisplay(self, data):
         logger.info(data)
-        self.statusBar().showMessage("当前用户：bufan;时间："+data.get("时间"))
+        self.statusBar().showMessage("当前用户：bufan;时间："+data.get("时间")[:-7])
         for i, but in enumerate(self.but_list):
             but.setText(str(data.get(self.but_name_list[i], "没有数据")))
 

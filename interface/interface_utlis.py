@@ -10,49 +10,23 @@ from conf.conf import MAIN_INTERFACE
 class SystemThread(QThread):
     para = pyqtSignal(dict)
 
-    def __init__(self, mydict, *args, **kwargs):
+    def __init__(self, mydict, config, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.mydict = mydict
-
-    def system_para_update(self):
-        self._para = self.mydict.copy()
-        self.data_para = {
-            "时间": str(QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm"))
-        }
-
+        self.config = config
 
 
 class BackendThread(SystemThread):
 
     def run(self):
         while True:
-            self.system_para_update()
-            for i in MAIN_INTERFACE:
+            self.data_para = self.mydict.copy()
+            for i in self.config:
                 for key, value in i:
-                    self.data_para[key] = str(self._para.get(key, "")) + value
+                    self.data_para[key] = str(self.data_para.get(key, "")) + value
             self.para.emit(self.data_para)
             time.sleep(1)
 
-
-# class BatteryBackendThread(QThread):
-#     para = pyqtSignal(dict)
-#
-#     def run(self):
-#         while True:
-#             date = QDateTime.currentDateTime()
-#             currentTime = date.toString("yyyy-MM-dd hh:mm:ss")
-#             self.para.emit({"1":str(currentTime)})
-#             time.sleep(1)
-#
-# class EngineBackendThread(QThread):
-#     para = pyqtSignal(dict)
-#
-#     def run(self):
-#         while True:
-#             date = QDateTime.currentDateTime()
-#             currentTime = date.toString("yyyy-MM-dd hh:mm:ss")
-#             self.para.emit({"1":str(currentTime)})
-#             time.sleep(1)
 
 class Window(QMainWindow):
     windowList = []
