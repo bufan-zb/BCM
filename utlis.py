@@ -6,7 +6,7 @@ import json
 import time
 import pandas as pd
 
-from conf.conf import FILE_COL_NAME, LOG_PATH
+from conf.conf import ONE_COL_NAME, LOG_PATH
 from conf.conf import TEST
 
 
@@ -50,7 +50,7 @@ class PandasWriteR():
         self.path = "./databases"
         self.current_path = self.path + "/{}".format(time.strftime('%Y-%m-%d')) +"/{}.csv"
         self.file_path = ""
-        self.file_col_name_list = FILE_COL_NAME
+        self.file_col_name_list = ONE_COL_NAME
 
     def write(self, df, filename):
         file_path = self.path + "/{}/{}.csv".format(time.strftime('%Y-%m-%d'), filename)
@@ -112,6 +112,8 @@ def car_speed(mydict):
             speed_list = []
         speed_list.append(1)
 
+def merge_one_day_data():
+    pass
 
 if __name__ == '__main__':
     # 测试日志写入
