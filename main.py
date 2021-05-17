@@ -21,21 +21,27 @@ data_dict["state"] = True
 def high(mydict, myqueue):
     data_acquisition_0_1 = threading.Thread(target=parameter_0_1, args=(mydict, myqueue,))
     data_acquisition_0_1.start()
+    # 发动机转速
     _rotate_speed = threading.Thread(target=rotate_speed, args=(mydict,))
-    _car_speed = threading.Thread(target=car_speed, args=(mydict,))
-    _saver = threading.Thread(target=connect, args=(mydict, myqueue,))
     _rotate_speed.start()
+    # 车速
+    _car_speed = threading.Thread(target=car_speed, args=(mydict,))
     _car_speed.start()
-    _saver.start()
 
 
 def low(mydict, myqueue):
+
     data_acquisition_1 = threading.Thread(target=parameter_1, args=(mydict, myqueue,))
     data_acquisition_1.start()
+
     data_save = threading.Thread(target=save_data, args=(myqueue,))
     data_save.start()
+    # 每天文件合并
     _merge_one_day_data = threading.Thread(target=merge_one_day_data)
     _merge_one_day_data.start()
+    # 前端socket接口
+    _server = threading.Thread(target=connect, args=(mydict, myqueue,))
+    _server.start()
 
 
 if __name__ == "__main__":
