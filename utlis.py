@@ -35,6 +35,8 @@ class Logger(object):
     def __call__(self, msg, *args, **kwargs):
         self.info(msg)
 
+logger = Logger()
+
 class PandasWriteR():
     """pandas追加写入"""
     __instance = None
@@ -69,6 +71,7 @@ def parameter_1(mydict, myqueue):
     # 每秒钟获取一次的参数
     while True:
         mydict["时间"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        logger.info(mydict)
         myqueue.put_nowait({"json": dict(mydict.copy()), "file_name": ["电动车速度", "发动机转速", "电流", "电压", "油门"]})
         time.sleep(1)
 
