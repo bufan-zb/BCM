@@ -8,7 +8,7 @@ from interface.setting_interface import Setting
 
 
 def pushButton1(self):
-    the_window = FirstMainWindow(self.x(), self.y(), self.width(), self.height(), self.mydict)
+    the_window = FirstMainWindow(self.x(), self.y(), self.width(), self.height())
     the_window.mydict = self.mydict
     self.windowList.append(the_window)
     if self.backend != None:
@@ -18,7 +18,7 @@ def pushButton1(self):
     the_window.show()
 
 def pushButton2(self):
-    the_window = BatteryWindow(self.x(), self.y(), self.width(), self.height(), self.mydict)
+    the_window = BatteryWindow(self.x(), self.y(), self.width(), self.height())
     the_window.mydict = self.mydict
     self.windowList.append(the_window)
     if self.backend != None:
@@ -28,7 +28,7 @@ def pushButton2(self):
     the_window.show()
 
 def pushButton3(self):
-    the_window = EngineWindow(self.x(), self.y(), self.width(), self.height(), self.mydict)
+    the_window = EngineWindow(self.x(), self.y(), self.width(), self.height())
     the_window.mydict = self.mydict
     self.windowList.append(the_window)
     if self.backend != None:
@@ -39,7 +39,7 @@ def pushButton3(self):
 
 
 def pushButton4(self):
-    the_window = SettingWindow(self.x(), self.y(), self.width(), self.height(), self.mydict)
+    the_window = SettingWindow(self.x(), self.y(), self.width(), self.height())
     the_window.mydict = self.mydict
     self.windowList.append(the_window)
     if self.backend != None:
@@ -98,7 +98,7 @@ class FirstMainWindow(FirstMain):
     def on_pushButton4_clicked(self):
         pushButton4(self)
 
-def start_interface(mydict, myqueue):
+def start_interface():
     # 启动界面
     app = QApplication(sys.argv)
     window = QWidget()
@@ -107,7 +107,7 @@ def start_interface(mydict, myqueue):
     y = (desktop.height() - window.height()) // 2
     w = 300
     h = 200
-    the_mainwindow = FirstMainWindow(x, y, w, h, mydict)
+    the_mainwindow = FirstMainWindow(x, y, w, h)
     the_mainwindow.windowList.append(the_mainwindow)
     the_mainwindow.show()
     sys.exit(app.exec_())

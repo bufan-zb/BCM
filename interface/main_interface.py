@@ -5,10 +5,10 @@ from utlis import Logger
 logger = Logger()
 
 class FirstMain(Window):
-    def __init__(self, x, y, w, h, mydict, *args, **kwargs):
+    def __init__(self, x, y, w, h, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.names = MAIN_INTERFACE
-        self.page_setup('主界面', x, y, w, h, mydict)
+        self.page_setup('主界面', x, y, w, h)
 
 
 
@@ -18,11 +18,11 @@ class FirstMain(Window):
         self.pushButton3.clicked.connect(self.on_pushButton3_clicked)
         self.pushButton4.clicked.connect(self.on_pushButton4_clicked)
 
-        self.refresh_data(mydict)
+        self.refresh_data()
 
 
-    def refresh_data(self, mydict):
-        self.backend = BackendThread(mydict, self.names)
+    def refresh_data(self):
+        self.backend = BackendThread(self.client, self.names)
         self.backend.para.connect(self.handleDisplay)
         self.backend.start()
 

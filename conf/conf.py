@@ -1,4 +1,8 @@
 
+HOST = '0.0.0.0'
+PORT = 8083
+BUF_SIZE = 102400
+
 TEST = True
 
 MAIN_INTERFACE = [[['速度', "KM/H"], ['电流', "A"], ['油门', "%"], ['发动机转速', "r/min"]],

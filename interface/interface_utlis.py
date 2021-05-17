@@ -3,16 +3,15 @@ import time
 from PyQt5.QtCore import QThread, pyqtSignal, QDateTime
 from PyQt5.QtWidgets import QMainWindow, QWidget, QHBoxLayout, QPushButton, QVBoxLayout, QSizePolicy
 
-from conf.conf import MAIN_INTERFACE
-
+from server.client import CacheClient
 
 
 class SystemThread(QThread):
     para = pyqtSignal(dict)
 
-    def __init__(self, mydict, config, *args, **kwargs):
+    def __init__(self, client, config, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.mydict = mydict
+        self.client = client
         self.config = config
 
 
@@ -20,7 +19,7 @@ class BackendThread(SystemThread):
 
     def run(self):
         while True:
-            self.data_para = self.mydict.copy()
+            self.data_para = self.client.cache_get()
             for i in self.config:
                 for key, value in i:
                     self.data_para[key] = str(self.data_para.get(key, "")) + value
@@ -30,9 +29,16 @@ class BackendThread(SystemThread):
 
 class Window(QMainWindow):
     windowList = []
+    client = None
 
-    def page_setup(self, title, x, y, w, h, mydict):
-        self.mydict = mydict
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if Window.client==None:
+            self.client = CacheClient()
+            Window.client = self.client
+
+    def page_setup(self, title, x, y, w, h):
+        self.mydict = self.client.cache_get()
         self.button_Adaptive = QSizePolicy(
             QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setWindowTitle(title)

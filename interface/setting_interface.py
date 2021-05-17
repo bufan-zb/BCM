@@ -7,10 +7,10 @@ from utlis import Logger
 logger = Logger()
 
 class Setting(Window):
-    def __init__(self, x, y, w, h, mydict, *args, **kwargs):
+    def __init__(self, x, y, w, h, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.names = SETTING_INTERFACE
-        self.page_setup('设置', x, y, w, h, mydict)
+        self.page_setup('设置', x, y, w, h)
 
         ###### 三个按钮事件 ######
         self.pushButton1.clicked.connect(self.on_pushButton1_clicked)
@@ -34,8 +34,8 @@ class Setting(Window):
         for i, but in enumerate(self.but_list):
             but.setText(str(data.get(self.but_name_list[i], "没有数据")))
 
-    def page_setup(self, title, x, y, w, h, mydict):
-        self.mydict = mydict
+    def page_setup(self, title, x, y, w, h):
+        self.mydict = self.client.cache_get()
         self.button_Adaptive = QSizePolicy(
             QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setWindowTitle(title)
