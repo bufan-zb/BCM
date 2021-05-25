@@ -1,9 +1,9 @@
 import time
 
-from PyQt5.QtCore import QThread, pyqtSignal, QDateTime
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QWidget, QHBoxLayout, QPushButton, QVBoxLayout, QSizePolicy
 
-from server.client import CacheClient
+from interface.client import CacheClient
 
 
 class SystemThread(QThread):

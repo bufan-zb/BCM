@@ -1,6 +1,6 @@
-from conf.conf import MAIN_INTERFACE
+from server.conf.conf import MAIN_INTERFACE
 from interface.interface_utlis import BackendThread, Window
-from utlis import Logger
+from server.utlis import Logger
 
 logger = Logger()
 

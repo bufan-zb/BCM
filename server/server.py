@@ -2,7 +2,7 @@ import json
 import socket
 import threading
 
-from conf.conf import HOST, PORT, BUF_SIZE
+from server.conf.conf import HOST, PORT, BUF_SIZE
 
 def cache_get(mydict, myqueue, con):
     r = mydict.copy()

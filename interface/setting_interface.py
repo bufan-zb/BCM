@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QSizePolicy, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit
 
-from conf.conf import SETTING_INTERFACE
+from server.conf.conf import SETTING_INTERFACE
 from interface.interface_utlis import BackendThread, Window
-from utlis import Logger
+from server.utlis import Logger
 
 logger = Logger()
 
