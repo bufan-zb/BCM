@@ -2,8 +2,8 @@ import threading
 
 import multiprocessing
 
-from server.conf.conf import MAIN_INTERFACE, BATERY_INTERFACE, ENGINE_INTERFACE
-from server.server import connect
+from conf.conf import MAIN_INTERFACE, BATERY_INTERFACE, ENGINE_INTERFACE
+from server import connect
 from utlis import rotate_speed, car_speed, parameter_1, parameter_0_1, save_data, merge_one_day_data
 
 data_dict = {}

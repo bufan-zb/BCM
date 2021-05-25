@@ -6,8 +6,8 @@ import json
 import time
 import pandas as pd
 
-from server.conf.conf import ONE_COL_NAME, LOG_PATH
-from server.conf.conf import TEST
+from conf.conf import ONE_COL_NAME, LOG_PATH
+from conf.conf import TEST
 
 
 class Logger(object):
