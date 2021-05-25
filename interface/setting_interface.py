@@ -2,9 +2,9 @@ from PyQt5.QtWidgets import QSizePolicy, QWidget, QVBoxLayout, QHBoxLayout, QPus
 
 from server.conf.conf import SETTING_INTERFACE
 from interface.interface_utlis import BackendThread, Window
-from server.utlis import Logger
-
-logger = Logger()
+# from server.utlis import Logger
+#
+# logger = Logger()
 
 class Setting(Window):
     def __init__(self, x, y, w, h, *args, **kwargs):
@@ -115,4 +115,5 @@ class Setting(Window):
         # self.showMaximized()
 
     def on_submitButton_clicked(self):
-        logger.info("点击提交")
+        pass
+        # logger.info("点击提交")

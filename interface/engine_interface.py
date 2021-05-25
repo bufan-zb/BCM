@@ -1,8 +1,8 @@
 from server.conf.conf import ENGINE_INTERFACE
 from interface.interface_utlis import BackendThread, Window
-from server.utlis import Logger
-
-logger = Logger()
+# from server.utlis import Logger
+#
+# logger = Logger()
 
 class Engine(Window):
     def __init__(self, x, y, w, h, *args, **kwargs):
